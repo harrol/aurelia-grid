@@ -1,0 +1,8 @@
+<template>
+     <span if.bind="column.format != ''">
+         ${row[column.property] | dateFormat:column.format}
+    </span>
+    <span if.bind="column.format == ''">
+         ${row[column.property]}
+    </span>
+</template>

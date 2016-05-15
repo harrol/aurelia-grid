@@ -1,5 +1,6 @@
 import {AuDatasource} from './au-datasource';
 import {AuColumn} from './au-column';
+import {AuRow} from './au-row';
 import {inject, bindable, bindingMode, children, customElement} from 'aurelia-framework';
 
 @customElement("au-grid")
@@ -8,8 +9,10 @@ export class AuGrid {
     @bindable rows: number = 10;
     startRow: number = 0;
     currentPage: number = 1;
+    @bindable({ defaultBindingMode: bindingMode.twoWay }) selectedRow: AuRow;
     private allData: any[];
     data: any;
+    
 
     @children('au-column')
     columns: Array<AuColumn>;
@@ -39,9 +42,8 @@ export class AuGrid {
         }
     }
 
-    rowClicked(event: any) {
-        console.log('row clicked');
-        console.log(event);
+    rowClicked(index: number, data: any) {
+        this.selectedRow = new AuRow(index, data);
     }
 
     sort(event: any) {
@@ -51,7 +53,6 @@ export class AuGrid {
     attached() {
         this.allData = this.datasource.allData();
         this.setPageData();
-        console.log(this.columns);
     }
 
 }

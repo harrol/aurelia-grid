@@ -4,13 +4,10 @@ import {noView, bindable, customElement, View} from 'aurelia-framework';
 export class AuColumn {
     @bindable property: string;
     @bindable header: string;
-    @bindable type: Type = Type.TEXT;
+    @bindable type: string = "text";
+    @bindable format: string;
     @bindable sortable: boolean = true;
     @bindable editable: boolean = false;
     @bindable filterable: boolean = false;
-    
-}
 
-export enum Type {
-    TEXT, BOOLEAN, 
 }

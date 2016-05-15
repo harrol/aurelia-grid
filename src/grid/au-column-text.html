@@ -1,0 +1,8 @@
+<template>
+     <span if.bind="column.editable">
+         <input type="text" value.bind="row[column.property]">
+    </span>
+    <span if.bind="!column.editable">
+         ${row[column.property]}
+    </span>
+</template>

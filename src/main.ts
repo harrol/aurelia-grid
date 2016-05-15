@@ -5,6 +5,7 @@ export function configure(aurelia: Aurelia) {
   aurelia.use
     .standardConfiguration()
     .developmentLogging()
+    .globalResources('grid/date-format')
     .globalResources('grid/au-grid')
     .globalResources('grid/au-column');
 

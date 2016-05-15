@@ -1,24 +1,29 @@
 
 <template>
-  <content></content>
+  <content></content><!-- Will change to slot in RC1 -->
 <div class="container">
   Page : ${currentPage} of ${totalPages}
   <div class="table-responsive">
     <table class="table table-striped table-hover">
       <thead>
         <tr>
-          <th repeat.for="column of columns">${column.header}
-            <span show.bind="column.sortable">
-                  <button click.trigger="sort($index)"><i class="fa fa-arrows-v"></i></button>
+          <th repeat.for="column of columns">
+            <span if.bind="column.sortable">
+                  <button class="btn btn-link" click.trigger="sort($index)">${column.header} <i class="fa fa-arrows-v"></i></button>
+              </span>
+               <span if.bind="!column.sortable">
+                  ${column.header}
               </span>
           </th>
           </tr>
         </thead>
           <tbody>
 
-    <tr repeat.for="row of data" click.trigger="rowClicked($index)">
+    <tr repeat.for="row of data" click.trigger="rowClicked($index, row)">
       
-      <td repeat.for="column of columns">${row[column.property]}</td>
+      <td repeat.for="column of columns">
+         <compose view="grid/au-column-${column.type}.html"></compose>
+        </td>
     </tr>
 </tbody>
   </table>
