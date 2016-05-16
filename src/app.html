@@ -1,11 +1,16 @@
+
 <template>
+
+<require from="./subscriber"></require>
   
    <au-grid datasource.bind="dataSource" rows=10 selected-row.bind="selected">
      <au-column property="column1" header="Text" editable.bind="true">col 1</au-column>
-     <au-column property="column2" header="Date" type="date" format="DD-MM-YYYY HH:mm:ss" sortable.bind=false>col 2</au-column>
+     <au-column property="column2" header="Date" type="date" format="DD-MM-YYYY HH:mm:ss" sortable>col 2</au-column>
      <au-column property="column3" header="Boolean" type="boolean">col 3</au-column>
    </au-grid> 
    
    <p>Selected data: ${selected.data.column1} ${selected.data.column2} ${selected.data.column3}</p>
-   
+
+  <subscriber></subscriber>
+
 </template>

@@ -2,8 +2,11 @@ import {AuDatasource} from './au-datasource';
 import {AuColumn} from './au-column';
 import {AuRow} from './au-row';
 import {inject, bindable, bindingMode, children, customElement} from 'aurelia-framework';
+import {EventAggregator} from 'aurelia-event-aggregator';
+
 
 @customElement("au-grid")
+@inject(EventAggregator)
 export class AuGrid {
     @bindable({ defaultBindingMode: bindingMode.twoWay }) datasource: AuDatasource;
     @bindable rows: number = 10;
@@ -12,6 +15,8 @@ export class AuGrid {
     @bindable({ defaultBindingMode: bindingMode.twoWay }) selectedRow: AuRow;
     private allData: any[];
     data: any;
+  
+  constructor(private eventAggregator: EventAggregator) {}
     
 
     @children('au-column')
@@ -44,6 +49,8 @@ export class AuGrid {
 
     rowClicked(index: number, data: any) {
         this.selectedRow = new AuRow(index, data);
+      this.eventAggregator.publish("au-grid-row-selected", data);
+      
     }
 
     sort(event: any) {

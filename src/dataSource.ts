@@ -8,7 +8,7 @@ export class DataSource implements AuDatasource {
             result.push({
                 "column1": `Hi ${i}`,
                 "column2": new Date(i * 100000000),
-                "column3": i % 2 == 0;
+                "column3": i % 2 == 0
             }
             );
         }
