@@ -10,9 +10,9 @@
           <th repeat.for="column of columns">
             <span if.bind="column.sortable">
                   <button class="btn btn-link" click.trigger="sort($index)">${column.header}
-                    <i show.bind="column.sortOrder == 0" class="fa fa-arrows-v"></i>
-                    <i show.bind="column.sortOrder == 1" class="fa fa-long-arrow-down"></i>
-                    <i show.bind="column.sortOrder == 2" class="fa fa-long-arrow-up"></i>
+                    <span show.bind="column.sortOrder == 0" class="glyphicon glyphicon-sort" aria-hidden="true"></span>
+                    <span show.bind="column.sortOrder == 1" class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span>
+                    <span show.bind="column.sortOrder == 2" class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span>
                   </button>
               </span>
                <span if.bind="!column.sortable">
