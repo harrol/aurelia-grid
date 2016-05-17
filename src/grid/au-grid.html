@@ -9,7 +9,11 @@
         <tr>
           <th repeat.for="column of columns">
             <span if.bind="column.sortable">
-                  <button class="btn btn-link" click.trigger="sort($index)">${column.header} <i class="fa fa-arrows-v"></i></button>
+                  <button class="btn btn-link" click.trigger="sort($index)">${column.header}
+                    <i show.bind="column.sortOrder == 0" class="fa fa-arrows-v"></i>
+                    <i show.bind="column.sortOrder == 1" class="fa fa-long-arrow-down"></i>
+                    <i show.bind="column.sortOrder == 2" class="fa fa-long-arrow-up"></i>
+                  </button>
               </span>
                <span if.bind="!column.sortable">
                   ${column.header}

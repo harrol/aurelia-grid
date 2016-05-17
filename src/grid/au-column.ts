@@ -7,7 +7,10 @@ export class AuColumn {
     @bindable type: string = "text";
     @bindable format: string;
     @bindable sortable: boolean = true;
+    sortOrder: SortOrder = SortOrder.NONE;
     @bindable editable: boolean = false;
     @bindable filterable: boolean = false;
 
 }
+
+export enum SortOrder {NONE, ASC, DESC};

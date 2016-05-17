@@ -1,5 +1,5 @@
 import {AuDatasource} from './au-datasource';
-import {AuColumn} from './au-column';
+import {AuColumn, SortOrder} from './au-column';
 import {AuRow} from './au-row';
 import {inject, bindable, bindingMode, children, customElement} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
@@ -13,7 +13,8 @@ export class AuGrid {
   startRow:number = 0;
   currentPage:number = 1;
   @bindable({defaultBindingMode: bindingMode.twoWay}) selectedRow:AuRow;
-  private allData:any[];
+  private allData: any[];
+  private originalData: any[];
   data:any;
   
   constructor(private eventAggregator:EventAggregator) {
@@ -54,12 +55,39 @@ export class AuGrid {
 
   }
 
-  sort(event:any) {
-    console.log(event);
+  sort(colNr:any) {
+    let column = this.columns[colNr];
+    if(column.sortOrder == SortOrder.NONE) {
+        column.sortOrder = SortOrder.ASC;
+    } else if (column.sortOrder == SortOrder.ASC) {
+      column.sortOrder = SortOrder.DESC;
+    } else {
+      column.sortOrder = SortOrder.NONE;
+    }
+    if(column.sortOrder == SortOrder.NONE) {
+      // restore original sort order
+      this.allData = this.originalData.slice();
+    } else {
+      let factor = column.sortOrder == SortOrder.ASC ? 1 : -1;
+      this.allData.sort((a, b) => {
+        return this.compareStrings(a[column.property], b[column.property]) * factor;
+      });
+    }
+    this.setPageData();
+    this.eventAggregator.publish("au-grid:column:sorted", colNr);
+  }
+
+  private compareStrings(a: string, b: string) : number {
+    return (a < b ? -1 :( a > b ? 1 : 0));
+  }
+
+  private compareNumbers(a: number, b: number) : number {
+    return a - b;
   }
 
   attached() {
     this.allData = this.datasource.allData();
+    this.originalData = this.allData.slice();
     this.setPageData();
   }
 
