@@ -56,14 +56,8 @@ export class AuGrid {
   }
 
   sort(colNr:any) {
+    this.updateSortOrders(colNr);
     let column = this.columns[colNr];
-    if(column.sortOrder == SortOrder.NONE) {
-        column.sortOrder = SortOrder.ASC;
-    } else if (column.sortOrder == SortOrder.ASC) {
-      column.sortOrder = SortOrder.DESC;
-    } else {
-      column.sortOrder = SortOrder.NONE;
-    }
     if(column.sortOrder == SortOrder.NONE) {
       // restore original sort order
       this.allData = this.originalData.slice();
@@ -75,6 +69,23 @@ export class AuGrid {
     }
     this.setPageData();
     this.eventAggregator.publish("au-grid:column:sorted", colNr);
+  }
+
+  private updateSortOrders(colNr: number) : void {
+    for(let i = 0; i < this.columns.length; i++) {
+      let column = this.columns[i];
+      if(i == colNr) {
+        if(column.sortOrder == SortOrder.NONE) {
+          column.sortOrder = SortOrder.ASC;
+        } else if (column.sortOrder == SortOrder.ASC) {
+          column.sortOrder = SortOrder.DESC;
+        } else {
+          column.sortOrder = SortOrder.NONE;
+        }
+      } else {
+        column.sortOrder = SortOrder.NONE;
+      }
+    }
   }
 
   private compareStrings(a: string, b: string) : number {
