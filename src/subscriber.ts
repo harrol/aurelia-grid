@@ -12,7 +12,7 @@ export class Subscriber {
 
 
   attached() {
-    this.subscription = this.eventAggregator.subscribe("au-grid-row-selected", data => {
+    this.subscription = this.eventAggregator.subscribe("au-grid:row:selected", data => {
       console.log("Click event observed: " + data.column1);
     });
   }
